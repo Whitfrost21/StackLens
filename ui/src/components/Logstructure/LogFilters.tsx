@@ -1,4 +1,4 @@
-import type { Logrange, UiRange } from "../types/log";
+import type { Logrange, UiRange } from "../../types/log";
 
 interface Props {
   search: string;
