@@ -3,7 +3,8 @@ import type { LogsResponse } from "../types/api";
 import type { Logrange } from "../types/log";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  // baseURL:"/api/v1/logs"
+  baseURL: import.meta.env.VITE_API_URL,
 });
 interface Fetchparams {
   page: number;
