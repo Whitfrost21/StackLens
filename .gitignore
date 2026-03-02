@@ -4,6 +4,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
+queries.sql
+project_status.md
+
 # Env files
 .env
 .env.*
@@ -26,6 +30,3 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
-
-.queries
-project_status.md
