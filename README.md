@@ -7,7 +7,7 @@ Built to simulate a production-style logging system with real-time filtering and
 
 ---
 
-## ⎯ Features
+## Features
 
 - ☐ Centralized log storage
 - ⌕ Search logs with debounce
@@ -22,7 +22,7 @@ Built to simulate a production-style logging system with real-time filtering and
 
 ---
 
-## ⎯ Tech Stack
+## Tech Stack
 
 ### Frontend
 
