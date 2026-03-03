@@ -9,16 +9,16 @@ Built to simulate a production-style logging system with real-time filtering and
 
 ## ⎯ Features
 
-☐ Centralized log storage
-⌕ Search logs with debounce
-⌁ Filter by service & log level (debug, info, warn, error)
-◷ Date range filtering
-◳ Analytics dashboard (log distribution & trends)
-⎘ Pagination
-◻ Fully responsive UI (mobile-first)
-◐ Dark mode support
-⇄ Smooth route transitions with Framer Motion
-⛨ Secure backend with CORS & environment variables
+- ☐ Centralized log storage
+- ⌕ Search logs with debounce
+- ⌁ Filter by service & log level (debug, info, warn, error)
+- ◷ Date range filtering
+- ◳ Analytics dashboard (log distribution & trends)
+- ⎘ Pagination
+- ◻ Fully responsive UI (mobile-first)
+- ◐ Dark mode support
+- ⇄ Smooth route transitions with Framer Motion
+- ⛨ Secure backend with CORS & environment variables
 
 ---
 
