@@ -53,7 +53,7 @@ export default function AppLayout() {
           </>
         )}
       </AnimatePresence>
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col min-w-0">
         <Navbar
           mobileOpen={mobileOpen}
           onMenuClick={() => {

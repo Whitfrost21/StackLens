@@ -53,12 +53,12 @@ const Logs = () => {
     <Errorstate onretry={refetch} />;
   }
   return (
-    <div className="bg-zinc-950 text-zinc-100">
+    <div className="w-full">
       <PageHeader
         title="Logs"
         description="Search,filter and inspect service logs"
       />
-      <div className="max-w-7xl mx-auto py-6">
+      <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <LogFilters
           search={search}
           level={level}
@@ -99,7 +99,7 @@ const Logs = () => {
 
         {data && (
           <div>
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900 shadow-sm">
+            <div className="rounded-xl border border-neutral-800 bg-neutral-900 shadow-sm min-w-0">
               <div className="overflow-x-auto">
                 <LogTable logs={data.data} />
               </div>

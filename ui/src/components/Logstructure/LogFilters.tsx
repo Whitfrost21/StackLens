@@ -31,7 +31,7 @@ const LogFilters = ({
   israngeInvalid,
 }: Props) => {
   return (
-    <div className="mb-6 bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+    <div className="mb-6 bg-zinc-900 border border-zinc-800 rounded-xl p-4 min-w-0">
       <input
         type="text"
         value={search}
@@ -71,36 +71,32 @@ const LogFilters = ({
         <option value="7d">Last 7 Days</option>
         <option value="30d">Last 30 Days</option>
       </select>
-      <div className="flex gap-4 mt-4">
-        <div className="flex flex-col">
+      <div className="flex flex-col sm:flex-row gap-4 mt-4 min-w-0">
+        <div className="flex flex-col w-full sm:w-auto">
           <label className="text-xs text-zinc-400 mb-1">Start Time</label>
           <input
             type="datetime-local"
             value={start}
-            onChange={(e) => {
-              onStartchange((e.target as HTMLInputElement).value);
-            }}
-            className="bg-zinc-800 px-3 py-2 rounded"
+            onChange={(e) => onStartchange(e.target.value)}
+            className="bg-zinc-800 px-3 py-2 rounded w-full"
           />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full sm:w-auto">
           <label className="text-xs text-zinc-400 mb-1">End Time</label>
           <input
             type="datetime-local"
             value={end}
-            onChange={(e) => {
-              onEndchange((e.target as HTMLInputElement).value);
-            }}
-            className="bg-zinc-800 px-3 py-2 rounded"
+            onChange={(e) => onEndchange(e.target.value)}
+            className="bg-zinc-800 px-3 py-2 rounded w-full"
           />
         </div>
-        {israngeInvalid && (
-          <p className="text-red-400 text-sm mt-2">
-            Start time must be before end time
-          </p>
-        )}
       </div>
+      {israngeInvalid && (
+        <p className="text-red-400 text-sm mt-2">
+          Start time must be before end time
+        </p>
+      )}
     </div>
   );
 };
