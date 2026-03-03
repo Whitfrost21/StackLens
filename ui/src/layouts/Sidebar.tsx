@@ -16,7 +16,13 @@ const navItems = [
   { name: "Settings", path: "/settings", icon: Settings },
 ];
 
-export default function AppSidebar() {
+export default function AppSidebar({
+  mobile = false,
+  onClose,
+}: {
+  mobile?: boolean;
+  onClose?: () => void;
+}) {
   const [collapsed, setCollapsed] = useState(() => {
     const saved = localStorage.getItem("sidebar-collapsed");
     return saved === "true";
@@ -28,9 +34,13 @@ export default function AppSidebar() {
 
   return (
     <aside
-      className={`shrink-0 relative h-full border-r border-neutral-800 bg-neutral-900  transition-all duration-300 ${
-        collapsed ? "w-20" : "w-64"
-      }`}
+      className={`
+        fixed md:relative
+        top-0 left-0 h-full z-40
+        border-r border-neutral-800 bg-neutral-900
+        transition-all duration-300
+        ${collapsed ? "w-20" : "w-64"}
+      `}
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-4">
@@ -60,6 +70,9 @@ export default function AppSidebar() {
               key={item.path}
               to={item.path}
               end={item.path === "/"}
+              onClick={() => {
+                if (mobile) onClose?.();
+              }}
               className={({ isActive }) =>
                 `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition ${
                   isActive

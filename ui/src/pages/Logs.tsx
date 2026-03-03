@@ -53,12 +53,12 @@ const Logs = () => {
     <Errorstate onretry={refetch} />;
   }
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="bg-zinc-950 text-zinc-100">
       <PageHeader
         title="Logs"
         description="Search,filter and inspect service logs"
       />
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      <div className="max-w-7xl mx-auto py-6">
         <LogFilters
           search={search}
           level={level}

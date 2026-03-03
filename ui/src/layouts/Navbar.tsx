@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useIsFetching } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Loader2, Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
 
 function getPageTitle(pathname: string) {
   if (pathname.startsWith("/logs")) return "Logs";
@@ -9,19 +10,42 @@ function getPageTitle(pathname: string) {
   return "Dashboard";
 }
 
-export default function Navbar() {
+export default function Navbar({
+  mobileOpen,
+  onMenuClick,
+}: {
+  mobileOpen: boolean;
+  onMenuClick: () => void;
+}) {
   const location = useLocation();
   const isFetching = useIsFetching();
 
   const title = getPageTitle(location.pathname);
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-md px-6">
+    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-md px-4 md:px-6">
       {/* Left */}
-      <div className="flex items-center gap-4">
-        <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
 
-        <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
+      <div className="flex items-center gap-3 md:gap-4">
+        {/* Mobile Toggle Button */}
+        <button
+          onClick={onMenuClick}
+          className="md:hidden text-neutral-400 hover:text-white transition"
+        >
+          <motion.div
+            initial={false}
+            animate={{ rotate: mobileOpen ? 90 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </motion.div>
+        </button>
+
+        <h2 className="text-base md:text-lg font-semibold tracking-tight">
+          {title}
+        </h2>
+
+        <span className="hidden sm:inline rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
           Development
         </span>
       </div>

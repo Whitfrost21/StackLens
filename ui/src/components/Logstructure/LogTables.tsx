@@ -28,8 +28,8 @@ function LogTable({ logs }: Props) {
   const selectedlog = logs.find((log) => log.id === selectedid) || null;
   return (
     <div className="bg-zinc-800 rounded-xl border shadow-sm p-4">
-      <div className="max-h-150 overflow-y-auto">
-        <table className="w-full text-left table-fixed">
+      <div className="max-h-150 overflow-y-auto overflow-x-auto">
+        <table className="min-w-17 text-left">
           <thead className="sticky top-0 bg-zinc-800 border-b border-zinc-700">
             <tr>
               <th className=" w-35 py-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
