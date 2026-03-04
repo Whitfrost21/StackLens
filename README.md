@@ -26,7 +26,7 @@ The system exposes a log ingestion API where services can push structured logs. 
 
 ## StackLens Demo
 
-![StackLens Demo](https://github.com/Whitfrost21/StackLens/blob/master/assets/4Kstacklens.mp4)
+![StackLens Demo](https://github.com/user-attachments/assets/e47645b8-ffd5-4e09-8d21-5ce406b17e6e)
 
 ## Tech Stack
 
