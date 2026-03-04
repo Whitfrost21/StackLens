@@ -5,6 +5,8 @@ It allows services to push logs into a centralized system and provides powerful 
 
 Built to simulate a production-style logging system with real-time filtering and responsive UI.
 
+The system exposes a log ingestion API where services can push structured logs. These logs are stored in PostgreSQL and analyzed through a React dashboard powered by backend analytics endpoints.
+
 ---
 
 ## Features
@@ -21,6 +23,10 @@ Built to simulate a production-style logging system with real-time filtering and
 - ⛨ Secure backend with CORS & environment variables
 
 ---
+
+## StackLens Demo
+
+!(https://github.com/Whitfrost21/StackLens/blob/master/assets/4Kstacklens.mp4)[StackLens Demo]
 
 ## Tech Stack
 
