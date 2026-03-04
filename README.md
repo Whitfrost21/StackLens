@@ -1,6 +1,6 @@
 # StackLens
 
-StackLens is a full-stack log aggregation and monitoring dashboard built with a modern PERN stack.  
+StackLens is a full-stack log aggregation and monitoring dashboard built with Typescript and a modern PERN stack.  
 It allows services to push logs into a centralized system and provides powerful filtering, searching, pagination, and analytics.
 
 Built to simulate a production-style logging system with real-time filtering and responsive UI.

@@ -45,7 +45,7 @@ export default function AppSidebar({
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-4">
         {!collapsed && (
-          <h1 className="text-lg font-semibold tracking-wide">LogSystem</h1>
+          <h1 className="text-lg font-semibold tracking-wide">StackLens</h1>
         )}
 
         <button
