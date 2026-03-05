@@ -1,12 +1,7 @@
 import "./App.css";
-import Logs from "./pages/Logs";
 
 function App() {
-  return (
-    <>
-      <Logs />
-    </>
-  );
+  return <>{/*i can use this for something in future */}</>;
 }
 
 export default App;
