@@ -167,7 +167,7 @@ export default function Analytics() {
             <button
               key={level}
               onClick={() => toggleLevel(level)}
-              className={`flex items-center gap-2 text-sm transition-opacity ${
+              className={`flex items-center gap-2 text-sm cursor-pointer transition-opacity ${
                 visibleLevels[level] ? "opacity-100" : "opacity-40"
               }`}
             >
@@ -210,6 +210,7 @@ export default function Analytics() {
                 dot={false}
                 isAnimationActive={false}
                 strokeOpacity={visibleLevels.info ? 1 : 0.2}
+                className="cursor-pointer"
               />
 
               <Line
@@ -220,6 +221,7 @@ export default function Analytics() {
                 dot={false}
                 isAnimationActive={false}
                 strokeOpacity={visibleLevels.warn ? 1 : 0.2}
+                className="cursor-pointer"
               />
 
               <Line
@@ -230,6 +232,7 @@ export default function Analytics() {
                 dot={false}
                 isAnimationActive={false}
                 strokeOpacity={visibleLevels.error ? 1 : 0.2}
+                className="cursor-pointer"
               />
               {/* active count in future to hide unwanted lines */}
               <Line
