@@ -3,7 +3,7 @@ import type { TimeSeriesPoint } from "../models/analytics.js";
 export function fillMissingBuckets(
   from: Date,
   to: Date,
-  bucket: "hour" | "day",
+  bucket: "hour" | "day" | "month",
   rows: any[],
 ): TimeSeriesPoint[] {
   const result: TimeSeriesPoint[] = [];
@@ -17,10 +17,12 @@ export function fillMissingBuckets(
 
   if (bucket === "hour") {
     current.setMinutes(0, 0, 0);
-  }
-
-  if (bucket === "day") {
+  } else if (bucket === "day") {
     current.setHours(0, 0, 0, 0);
+  } else if (bucket === "month") {
+    // For month use the first day of the month at midnight
+    current.setHours(0, 0, 0, 0);
+    current.setDate(1);
   }
 
   while (current <= to) {
@@ -37,7 +39,13 @@ export function fillMissingBuckets(
 
     if (bucket === "hour") {
       current.setHours(current.getHours() + 1);
+    } else if (bucket === "month") {
+      // next month (keeps day=1)
+      const nextMonth = current.getMonth() + 1;
+      current.setMonth(nextMonth);
+      current.setDate(1); // ensure start of month
     } else {
+      // default to day increment
       current.setDate(current.getDate() + 1);
     }
   }
