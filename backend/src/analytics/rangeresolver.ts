@@ -7,9 +7,15 @@ export function Resolverange(range: TimeRange): {
 } {
   const now = new Date();
   switch (range) {
+    case "1y":
+      return {
+        from: new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000),
+        to: now,
+        bucket: "month",
+      };
     case "24h":
       return {
-        from: new Date(now.getTime() - 7 * 60 * 60 * 1000),
+        from: new Date(now.getTime() - 24 * 60 * 60 * 1000),
         to: now,
         bucket: "hour",
       };

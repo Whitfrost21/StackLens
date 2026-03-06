@@ -94,9 +94,11 @@ export async function getAnalytics(
       bucket,
       timeseriesResult.rows,
     );
+
     console.log("FROM:", from);
     console.log("TO:", to);
-    return {
+
+    const response: AnalyticsResponse = {
       meta: {
         range: range,
         from: from.toISOString(),
@@ -116,6 +118,8 @@ export async function getAnalytics(
       services,
       timeseries,
     };
+
+    return response;
   } finally {
     client.release();
   }
