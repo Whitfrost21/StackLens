@@ -1,7 +1,7 @@
 import type { Loglevel } from "./logs.models.js";
 
-export type TimeBucket = "hour" | "day";
-export type TimeRange = "24h" | "7d" | "30d";
+export type TimeBucket = "hour" | "day" | "month";
+export type TimeRange = "24h" | "7d" | "30d" | "1y";
 
 export interface AnalyticsMeta {
   range: TimeRange;
