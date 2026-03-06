@@ -1,5 +1,12 @@
-export type TimeRange = "24h" | "7d" | "30d";
+export type TimeRange = "24h" | "7d" | "30d" | "1y";
 
+export type RawTimePoint = {
+  timestamp?: string;
+  info?: number | string | null;
+  warn?: number | string | null;
+  error?: number | string | null;
+  debug?: number | string | null;
+};
 export interface AnalyticsResponse {
   meta: {
     range: TimeRange;

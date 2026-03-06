@@ -16,7 +16,7 @@ import AnalyticsCard, {
 import PageHeader from "../components/ui/Pageheader";
 import CustomTooltip from "../components/histograms/Tooltip";
 import { useEffect, useState } from "react";
-import type { TimeRange } from "../types/analyzeModel";
+import type { RawTimePoint, TimeRange } from "../types/analyzeModel";
 import { useAnalytics } from "../hooks/useAnalytics";
 import { Errorstate } from "../components/ui/Errorstate";
 import { AnalyticsSkeleton } from "../components/ui/Skeletontable";
@@ -113,9 +113,22 @@ export default function Analytics() {
   if (!data) return null;
   const summary = data?.summary;
   const levels = data?.levels ?? [];
-  const timeseries = data?.timeseries ?? [];
+  const rawTimeseries = data?.timeseries ?? [];
+
+  const normalizedTimeseries = (rawTimeseries ?? []).map(
+    (pt: RawTimePoint) => ({
+      timestamp: pt.timestamp,
+      info: Number(pt.info ?? 0),
+      warn: Number(pt.warn ?? 0),
+      error: Number(pt.error ?? 0),
+      debug: Number(pt.debug ?? 0),
+    }),
+  );
   const services = data?.services ?? [];
-  console.log(timeseries);
+
+  //for debugging safe to remove later
+  console.log("raw timeseries:", rawTimeseries);
+  console.log("normalized timeseries:", normalizedTimeseries);
 
   return (
     <div className="space-y-6">
@@ -125,7 +138,7 @@ export default function Analytics() {
       />
       {/* Time Range Selector */}
       <div className="flex items-center gap-3">
-        {(["24h", "7d", "30d"] as const).map((r) => (
+        {(["24h", "7d", "30d", "1y"] as const).map((r) => (
           <button
             key={r}
             onClick={() => setRange(r)}
@@ -181,7 +194,7 @@ export default function Analytics() {
       <ChartContainer title="Logs Over Time (By Level)">
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={timeseries}>
+            <LineChart data={normalizedTimeseries}>
               <CartesianGrid
                 stroke="#27272a"
                 strokeDasharray="3 3"

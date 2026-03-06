@@ -26,7 +26,7 @@ export default function Settings() {
             <select
               value={defaultRange}
               onChange={(e) =>
-                setDefaultRange(e.target.value as "24h" | "7d" | "30d")
+                setDefaultRange(e.target.value as "24h" | "7d" | "30d" | "1y")
               }
               className="rounded-md border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-neutral-600"
             >
