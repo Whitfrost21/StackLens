@@ -15,9 +15,7 @@ export default function Settings() {
           {/* Default Time Range */}
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium">
-                Default Dashboard Time Range
-              </p>
+              <p className="text-sm font-medium">Default Time Range</p>
               <p className="text-xs text-neutral-500">
                 Set the default time range when opening logs or analytics
               </p>
