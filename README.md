@@ -104,7 +104,7 @@ POST /logs
 }
 ```
 
-The server stores the log and makes it immediately available for search and analytics.
+The server stores the log in db and fetches it making immediately available for search and analytics.
 
 ---
 
