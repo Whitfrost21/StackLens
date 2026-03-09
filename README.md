@@ -113,7 +113,7 @@ The server stores the log in db and fetches it making immediately available for 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/stacklens.git
+git clone https://github.com/Whitfrost21/stacklens.git
 cd stacklens
 ```
 
