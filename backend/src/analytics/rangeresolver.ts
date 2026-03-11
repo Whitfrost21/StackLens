@@ -7,11 +7,11 @@ export function Resolverange(range: TimeRange): {
 } {
   const now = new Date();
   switch (range) {
-    case "1y":
+    case "1h":
       return {
-        from: new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000),
+        from: new Date(now.getTime() - 60 * 60 * 1000),
         to: now,
-        bucket: "month",
+        bucket: "hour",
       };
     case "24h":
       return {
@@ -34,7 +34,14 @@ export function Resolverange(range: TimeRange): {
         bucket: "day",
       };
 
+    case "1y":
+      return {
+        from: new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000),
+        to: now,
+        bucket: "month",
+      };
+
     default:
-      throw new Error("invalid range");
+      throw new Error(`invalid range: ${range}`);
   }
 }

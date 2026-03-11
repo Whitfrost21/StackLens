@@ -18,11 +18,14 @@ app.use("/api/v1/logs", logroutes);
 app.use("/api/v1/dashboard", dashboardrouter);
 app.use((err: any, req: any, res: any, next: any) => {
   console.error(err);
-  res.status(err.status || 500).json({
-    message:
-      process.env.NODE_ENV === "production"
-        ? "Internal Server Error"
-        : err.message,
+  const statusCode = err.status || err.statusCode || 500;
+  const message =
+    process.env.NODE_ENV === "production"
+      ? "Internal Server Error"
+      : err.message || "An unexpected error occurred";
+  res.status(statusCode).json({
+    message,
+    ...(process.env.NODE_ENV !== "production" && { error: err.toString() }),
   });
 });
 

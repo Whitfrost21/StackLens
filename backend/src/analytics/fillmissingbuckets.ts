@@ -9,8 +9,13 @@ export function fillMissingBuckets(
   const result: TimeSeriesPoint[] = [];
   const map = new Map<number, any>();
 
-  for (const row of rows) {
-    map.set(new Date(row.bucket).getTime(), row);
+  // Ensure rows is an array and handle null/undefined
+  const validRows = Array.isArray(rows) ? rows : [];
+
+  for (const row of validRows) {
+    if (row && row.bucket) {
+      map.set(new Date(row.bucket).getTime(), row);
+    }
   }
 
   const current = new Date(from);

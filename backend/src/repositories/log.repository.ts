@@ -21,6 +21,11 @@ export class LogRepository {
 
   static async findAll(filters: GetLogsDTO) {
     const { level, service, search, page, limit, start, end, range } = filters;
+
+    // Validate pagination parameters
+    const validPage = Math.max(1, page);
+    const validLimit = Math.max(1, Math.min(limit, 100));
+
     const values: any[] = [];
     const conditions: string[] = [];
     let index = 1;
@@ -61,18 +66,19 @@ export class LogRepository {
     const whereclause =
       conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
 
-    const offset = (page - 1) * limit;
+    const offset = (validPage - 1) * validLimit;
     const dataquery = `SELECT * FROM LOGS ${whereclause} ORDER BY timestamp DESC LIMIT $${index++} OFFSET $${index};`;
-    const datavalues = [...values, limit, offset];
+    const datavalues = [...values, validLimit, offset];
     console.log("Query:", dataquery);
     console.log("Values:", datavalues);
     const dataresult = await pool.query(dataquery, datavalues);
 
     const countquery = `SELECT COUNT(*) as total FROM logs ${whereclause};`;
     const countresult = await pool.query(countquery, values);
+    const total = countresult.rows[0] ? Number(countresult.rows[0].total) : 0;
     return {
       rows: dataresult.rows,
-      total: Number(countresult.rows[0].total),
+      total,
     };
   }
 }

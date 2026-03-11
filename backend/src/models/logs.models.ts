@@ -16,5 +16,5 @@ export type GetLogsDTO = {
   limit: number;
   start?: Date;
   end?: Date;
-  range: "1h" | "24h" | "7d" | "30d";
+  range?: "1h" | "24h" | "7d" | "30d";
 };
