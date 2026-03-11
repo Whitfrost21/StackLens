@@ -18,6 +18,7 @@ const Logs = () => {
   const debouncedsearch = useDebounce(search, 400);
   const finalsearch =
     debouncedsearch.trim().length >= 2 ? debouncedsearch.trim() : undefined;
+  const finalservice = service.trim().length > 0 ? service.trim() : undefined;
   const limit = 8;
   const apiRange = range === "all" ? undefined : range;
   const [start, setstart] = useState<string>("");
@@ -35,14 +36,14 @@ const Logs = () => {
     isEndValid &&
     parsedStart!.getTime() <= parsedEnd!.getTime();
 
-  const shouldFetch = !start || !end ? true : new Date(start) <= new Date(end);
+  const shouldFetch = start && end ? new Date(start) <= new Date(end) : true;
   const { data, isLoading, isFetching, error, refetch } = useLogs(
     {
       page,
       limit,
       search: finalsearch,
       level: level || undefined,
-      service: service || undefined,
+      service: finalservice,
       range: apiRange,
       start: start,
       end: end,
@@ -50,7 +51,7 @@ const Logs = () => {
     { enabled: shouldFetch },
   );
   if (error) {
-    <Errorstate onretry={refetch} />;
+    return <Errorstate onretry={refetch} />;
   }
   return (
     <div className="w-full">
