@@ -7,7 +7,7 @@ yarn-error.log*
 
 queries.sql
 project_status.md
-
+EDGE_CASES_FIXED.md
 # Env files
 .env
 .env.*
