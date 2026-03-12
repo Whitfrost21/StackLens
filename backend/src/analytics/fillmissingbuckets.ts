@@ -9,7 +9,6 @@ export function fillMissingBuckets(
   const result: TimeSeriesPoint[] = [];
   const map = new Map<number, any>();
 
-  // Ensure rows is an array and handle null/undefined
   const validRows = Array.isArray(rows) ? rows : [];
 
   for (const row of validRows) {
@@ -25,7 +24,7 @@ export function fillMissingBuckets(
   } else if (bucket === "day") {
     current.setHours(0, 0, 0, 0);
   } else if (bucket === "month") {
-    // For month use the first day of the month at midnight
+    //  first day of the month at midnight
     current.setHours(0, 0, 0, 0);
     current.setDate(1);
   }
@@ -48,7 +47,7 @@ export function fillMissingBuckets(
       // next month (keeps day=1)
       const nextMonth = current.getMonth() + 1;
       current.setMonth(nextMonth);
-      current.setDate(1); // ensure start of month
+      current.setDate(1);
     } else {
       // default to day increment
       current.setDate(current.getDate() + 1);
