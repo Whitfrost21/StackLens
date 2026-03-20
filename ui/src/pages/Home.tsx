@@ -7,6 +7,7 @@ import { useDashboard } from "../hooks/useDashboard";
 import { useEffect, useRef } from "react";
 import { DashboardSkeleton } from "../components/ui/Skeletontable";
 import { useUISettings } from "../hooks/useSettings";
+import type { Log } from "../types/log";
 
 export default function Dashboard() {
   const { autoRefresh, setAutoRefresh } = useUISettings();
@@ -107,7 +108,7 @@ export default function Dashboard() {
           </h3>
         </div>
         <div className="divide-y-2 p-4">
-          {recentLogs.map((log) => (
+          {recentLogs.map((log: Log) => (
             <div
               key={log.id}
               onClick={() => navigate(`/logs?selected=${log.id}`)}
