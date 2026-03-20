@@ -1,13 +1,11 @@
 import type { AnalyticsResponse, TimeRange } from "../types/analyzeModel";
+import API from "./logs";
 
 export async function fetchAnalytics(
   range: TimeRange,
 ): Promise<AnalyticsResponse> {
-  const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/logs/analytics?range=${range}`,
-  );
-  if (!res.ok) {
-    throw Error("failed to fetch logs");
-  }
-  return res.json();
+  const res = await API.get("/logs/analytics", {
+    params: { range },
+  });
+  return res.data;
 }

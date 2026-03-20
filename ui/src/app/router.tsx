@@ -4,6 +4,7 @@ import Logs from "../pages/Logs";
 import Analytics from "../pages/Analytics";
 import Dashboard from "../pages/Home";
 import Settings from "../pages/Settings";
+import Login from "../pages/Login";
 
 export const router = createBrowserRouter([
   {
@@ -19,4 +20,5 @@ export const router = createBrowserRouter([
       { path: "settings", element: <Settings /> },
     ],
   },
+  { path: "login", element: <Login /> },
 ]);

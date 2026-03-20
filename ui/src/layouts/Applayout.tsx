@@ -1,12 +1,35 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import AppSidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
 
 export default function AppLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) {
+        navigate("/login");
+      }
+      setLoading(false);
+    };
+    checkSession();
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (!session) {
+          navigate("/login");
+        }
+      },
+    );
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  });
 
   useEffect(() => {
     if (mobileOpen) {
@@ -15,7 +38,7 @@ export default function AppLayout() {
       document.body.style.overflow = "auto";
     }
   }, [mobileOpen]);
-
+  if (loading) return <div>Loading...</div>;
   return (
     <div className="flex h-screen overflow-hidden bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100">
       {/*desktop Sidebar*/}

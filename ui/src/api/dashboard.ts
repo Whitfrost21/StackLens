@@ -1,11 +1,6 @@
-import type { DashboardResponse } from "../types/dashboardtypes";
+import API from "./logs";
 
-export async function Fetchdashboard(): Promise<DashboardResponse> {
-  //api/v1/dashboard
-  const res = await fetch(import.meta.env.VITE_API_URL + "/dashboard");
-
-  if (!res.ok) {
-    throw Error("failed to fetch dashboard data");
-  }
-  return res.json();
+export async function Fetchdashboard() {
+  const res = await API.get("/dashboard");
+  return res.data;
 }
