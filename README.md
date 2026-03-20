@@ -21,6 +21,7 @@ The system exposes a log ingestion API where services can push structured logs. 
 - ◐ Dark mode support
 - ⇄ Smooth route transitions with Framer Motion
 - ⛨ Secure backend with CORS & environment variables
+- Authentication
 
 ---
 
