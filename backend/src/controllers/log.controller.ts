@@ -10,16 +10,24 @@ export class LogController {
   static async create(req: Request, res: Response) {
     try {
       const validatedbody = (req as any).validated;
+      const user = (req as any).user;
       if (!validatedbody) {
         return res.status(400).json({ error: "Invalid request body" });
       }
-      const log = await LogService.createlog(validatedbody);
+      if (!user) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      const log = await LogService.createlog({
+        ...validatedbody,
+        user_id: user.id,
+      });
       res.status(201).json(log);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "failed to create log" });
     }
   }
+
   //get
   static async getAll(req: Request, res: Response) {
     try {
@@ -27,11 +35,13 @@ export class LogController {
       if (!filters || filters.page < 1 || filters.limit < 1) {
         return res.status(400).json({ error: "Invalid pagination parameters" });
       }
+      const user = (req as any).user;
       const { rows, total } = await LogService.getLogs(filters);
       const validLimit = Math.max(1, Math.min(filters.limit, 100));
       const totalpages = Math.ceil(total / validLimit);
       return res.json({
         filters: { level: filters.level, service: filters.service },
+        user_id: user.id,
         pagination: {
           page: filters.page,
           limit: validLimit,
@@ -53,7 +63,8 @@ export class LogController {
       if (!validated || !validated.range) {
         return res.status(400).json({ error: "Invalid analytics parameters" });
       }
-      const data = await getAnalytics(pool, validated.range);
+      const user = (req as any).user;
+      const data = await getAnalytics(pool, validated.range, user.id);
       return res.status(200).json(data);
     } catch (error) {
       console.error("Analytics error:", error);

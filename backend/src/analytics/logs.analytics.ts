@@ -11,6 +11,7 @@ import type { Loglevel } from "../models/logs.models.js";
 export async function getAnalytics(
   pool: Pool,
   range: TimeRange,
+  userid: string,
 ): Promise<AnalyticsResponse> {
   const client = await pool.connect();
   try {
@@ -19,14 +20,17 @@ export async function getAnalytics(
     const summaryresult = await client.query(
       `
       SELECT
-      COUNT(*)::int AS total_logs,
-      COUNT(*) FILTER  (WHERE level='error')::int AS error_count,
-      COUNT(*) FILTER (WHERE level = 'warn')::int AS warn_count,
-      COUNT(*) FILTER (WHERE level = 'info')::int AS info_count,
-      COUNT(*) FILTER (WHERE level = 'debug')::int AS debug_count,
-      COUNT(DISTINCT service)::int AS unique_services
-      FROM logs WHERE timestamp BETWEEN $1 AND $2;`,
-      [from, to],
+        COUNT(*)::int AS total_logs,
+        COUNT(*) FILTER (WHERE level='error')::int AS error_count,
+        COUNT(*) FILTER (WHERE level='warn')::int AS warn_count,
+        COUNT(*) FILTER (WHERE level='info')::int AS info_count,
+        COUNT(*) FILTER (WHERE level='debug')::int AS debug_count,
+        COUNT(DISTINCT service)::int AS unique_services
+      FROM logs
+      WHERE user_id = $1
+      AND timestamp BETWEEN $2 AND $3;
+      `,
+      [userid, from, to],
     );
     const summaryRow = summaryresult.rows[0];
 
@@ -41,12 +45,13 @@ export async function getAnalytics(
 
     const levelsResult = await client.query(
       `
-         SELECT level, COUNT(*)::int AS count
-         FROM logs
-         WHERE timestamp BETWEEN $1 AND $2
-         GROUP BY level;
-         `,
-      [from, to],
+      SELECT level, COUNT(*)::int AS count
+      FROM logs
+      WHERE user_id = $1
+      AND timestamp BETWEEN $2 AND $3
+      GROUP BY level;
+      `,
+      [userid, from, to],
     );
     const allowedLevels: Loglevel[] = ["info", "warn", "error", "debug"];
 
@@ -60,32 +65,34 @@ export async function getAnalytics(
 
     const servicesResult = await client.query(
       `
-         SELECT service, COUNT(*)::int AS count
-         FROM logs
-         WHERE timestamp BETWEEN $1 AND $2
-         GROUP BY service
-         ORDER BY count DESC
-         LIMIT 5;
-         `,
-      [from, to],
+      SELECT service, COUNT(*)::int AS count
+      FROM logs
+      WHERE user_id = $1
+      AND timestamp BETWEEN $2 AND $3
+      GROUP BY service
+      ORDER BY count DESC
+      LIMIT 5;
+      `,
+      [userid, from, to],
     );
 
     const services = servicesResult.rows;
 
     const timeseriesResult = await client.query(
       `
-         SELECT
-           date_trunc($3, timestamp) AS bucket,
-           COUNT(*) FILTER (WHERE level = 'info')::int AS info,
-           COUNT(*) FILTER (WHERE level = 'warn')::int AS warn,
-           COUNT(*) FILTER (WHERE level = 'error')::int AS error,
-           COUNT(*) FILTER (WHERE level = 'debug')::int AS debug
-         FROM logs
-         WHERE timestamp BETWEEN $1 AND $2
-         GROUP BY bucket
-         ORDER BY bucket ASC;
-         `,
-      [from, to, bucket],
+      SELECT
+        date_trunc($4, timestamp) AS bucket,
+        COUNT(*) FILTER (WHERE level = 'info')::int AS info,
+        COUNT(*) FILTER (WHERE level = 'warn')::int AS warn,
+        COUNT(*) FILTER (WHERE level = 'error')::int AS error,
+        COUNT(*) FILTER (WHERE level = 'debug')::int AS debug
+      FROM logs
+      WHERE user_id = $1
+      AND timestamp BETWEEN $2 AND $3
+      GROUP BY bucket
+      ORDER BY bucket ASC;
+      `,
+      [userid, from, to, bucket],
     );
 
     const timeseries = fillMissingBuckets(

@@ -4,9 +4,11 @@ import type { CreateLogDTO, GetLogsDTO } from "../models/logs.models.js";
 //fetch logs from db
 export class LogRepository {
   static async create(log: CreateLogDTO) {
-    const query = `INSERT INTO logs(service,level,message,metadata,timestamp)
-      VALUES($1,$2,$3,$4::jsonb,$5)
-      RETURNING *;`;
+    const query = `
+    INSERT INTO logs(service, level, message, metadata, timestamp, user_id)
+    VALUES($1, $2, $3, $4::jsonb, $5, $6)
+    RETURNING *;
+    `;
 
     const values = [
       log.service,
@@ -14,13 +16,15 @@ export class LogRepository {
       log.message,
       log.metadata || null,
       log.timestamp,
+      log.userid,
     ];
     const result = await pool.query(query, values);
     return result.rows[0];
   }
 
   static async findAll(filters: GetLogsDTO) {
-    const { level, service, search, page, limit, start, end, range } = filters;
+    const { userid, level, service, search, page, limit, start, end, range } =
+      filters;
 
     // Validate pagination parameters
     const validPage = Math.max(1, page);
@@ -30,6 +34,8 @@ export class LogRepository {
     const conditions: string[] = [];
     let index = 1;
     let effectivestart: Date | undefined;
+    conditions.push(`user_id = $${index++}`);
+    values.push(userid);
     if (start) {
       effectivestart = start;
     } else if (range) {

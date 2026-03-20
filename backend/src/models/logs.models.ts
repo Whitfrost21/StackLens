@@ -6,6 +6,7 @@ export interface CreateLogDTO {
   message: string;
   metadata?: Record<string, any>;
   timestamp: string;
+  userid: string;
 }
 
 export type GetLogsDTO = {
@@ -17,4 +18,5 @@ export type GetLogsDTO = {
   start?: Date;
   end?: Date;
   range?: "1h" | "24h" | "7d" | "30d";
+  userid: string;
 };

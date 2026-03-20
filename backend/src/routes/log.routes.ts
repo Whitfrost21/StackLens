@@ -4,13 +4,15 @@ import { validate } from "../middleware/validate.js";
 import { logSchema } from "../schema/log.schema.js";
 import { logQuerySchema } from "../schema/log.query.schema.js";
 import { analyticsQuerySchema } from "../schema/analytics.schema.js";
+import { auth } from "../middleware/auth.js";
 
 const router = Router();
 
-router.post("/", validate(logSchema), LogController.create);
-router.get("/", validate(logQuerySchema, "query"), LogController.getAll);
+router.post("/", auth, validate(logSchema), LogController.create);
+router.get("/", auth, validate(logQuerySchema, "query"), LogController.getAll);
 router.get(
   "/analytics",
+  auth,
   validate(analyticsQuerySchema, "query"),
   LogController.getLogsAnalytics,
 );
