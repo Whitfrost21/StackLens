@@ -4,6 +4,7 @@ import AppSidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import FullscreenLoader from "../components/ui/Loader";
 
 export default function AppLayout() {
   const location = useLocation();
@@ -38,7 +39,7 @@ export default function AppLayout() {
       document.body.style.overflow = "auto";
     }
   }, [mobileOpen]);
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <FullscreenLoader label="Loading..." />;
   return (
     <div className="flex h-screen overflow-hidden bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100">
       {/*desktop Sidebar*/}
