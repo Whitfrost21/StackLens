@@ -30,7 +30,7 @@ export default function AppLayout() {
     return () => {
       listener.subscription.unsubscribe();
     };
-  });
+  }, [navigate]);
 
   useEffect(() => {
     if (mobileOpen) {
