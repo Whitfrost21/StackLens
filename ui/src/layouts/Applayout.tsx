@@ -5,15 +5,18 @@ import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import FullscreenLoader from "../components/ui/Loader";
+import type { User } from "@supabase/supabase-js";
 
 export default function AppLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
+      setUser(data.session?.user ?? null);
       if (!data.session) {
         navigate("/login");
       }
@@ -22,6 +25,8 @@ export default function AppLayout() {
     checkSession();
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
+        setUser(session?.user ?? null);
+
         if (!session) {
           navigate("/login");
         }
@@ -79,6 +84,7 @@ export default function AppLayout() {
       </AnimatePresence>
       <div className="flex flex-1 flex-col min-w-0">
         <Navbar
+          user={user}
           mobileOpen={mobileOpen}
           onMenuClick={() => {
             setMobileOpen((prev) => !prev);
