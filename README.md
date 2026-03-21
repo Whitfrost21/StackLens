@@ -156,7 +156,6 @@ The React app will be running at `http://localhost:5173`.
 - [ ] Log ingestion agents
 - [ ] Alerting and notifications
 - [ ] Distributed tracing support
-- [ ] Role-based access control (Authentication)
 
 ---
 
