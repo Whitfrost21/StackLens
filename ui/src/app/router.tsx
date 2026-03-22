@@ -7,6 +7,7 @@ import Settings from "../pages/Settings";
 import Login from "../pages/Login";
 
 export const router = createBrowserRouter([
+  { path: "login", element: <Login /> },
   {
     path: "/",
     element: <AppLayout />,
@@ -20,5 +21,4 @@ export const router = createBrowserRouter([
       { path: "settings", element: <Settings /> },
     ],
   },
-  { path: "login", element: <Login /> },
 ]);
