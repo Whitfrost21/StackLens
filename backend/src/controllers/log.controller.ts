@@ -36,7 +36,10 @@ export class LogController {
         return res.status(400).json({ error: "Invalid pagination parameters" });
       }
       const user = (req as any).user;
-      const { rows, total } = await LogService.getLogs(filters);
+      const { rows, total } = await LogService.getLogs({
+        ...filters,
+        userid: user.id,
+      });
       const validLimit = Math.max(1, Math.min(filters.limit, 100));
       const totalpages = Math.ceil(total / validLimit);
       return res.json({

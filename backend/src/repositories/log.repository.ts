@@ -73,7 +73,9 @@ export class LogRepository {
       conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
 
     const offset = (validPage - 1) * validLimit;
-    const dataquery = `SELECT * FROM LOGS ${whereclause} ORDER BY timestamp DESC LIMIT $${index++} OFFSET $${index};`;
+    const limitIndex = index++;
+    const offsetIndex = index++;
+    const dataquery = `SELECT * FROM logs ${whereclause} ORDER BY timestamp DESC LIMIT $${limitIndex} OFFSET $${offsetIndex};`;
     const datavalues = [...values, validLimit, offset];
     console.log("Query:", dataquery);
     console.log("Values:", datavalues);
