@@ -22,8 +22,6 @@ export default function Dashboard() {
     }
   }, [data]);
 
-  // provider already persists the autoRefresh flag; no need to duplicate that here
-
   if (isLoading) return <DashboardSkeleton />;
   if (isError) return <Errorstate onretry={refetch} />;
   if (!data) return null;
